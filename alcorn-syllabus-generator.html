@@ -1,0 +1,2080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROFESSIONAL SYLLABUS GENERATOR</title>
+    <style>
+        /* CSS Variables */
+        :root {
+            --asu-purple: #512D6D;
+            --asu-gold: #E9A713;
+            --asu-purple-dark: #3b1f4e;
+            --asu-purple-light: #f7f3ff;
+            --text-dark: #2c2c2c;
+            --text-medium: #555;
+            --text-light: #777;
+            --border-color: #e0e0e0;
+            --background-light: #fafafa;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+            --radius-sm: 4px;
+            --radius-md: 8px;
+        }
+
+        /* Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Base Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
+            min-height: 100vh;
+        }
+
+        .app-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--asu-purple) 0%, var(--asu-purple-dark) 100%);
+            color: white;
+            padding: 2rem 2.5rem;
+            border-bottom: 4px solid var(--asu-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(233,167,19,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Action Bar */
+        .action-bar {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 1.25rem 2.5rem;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            align-items: center;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: inherit;
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: var(--asu-purple);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--asu-purple-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(81, 45, 109, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--asu-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d19610;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(233, 167, 19, 0.3);
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--asu-purple);
+            border: 2px solid var(--asu-purple);
+        }
+
+        .btn-outline:hover {
+            background: var(--asu-purple-light);
+        }
+
+        /* Main Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: minmax(500px, 1fr) minmax(600px, 1.2fr);
+            gap: 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        .editor-panel {
+            background: var(--background-light);
+            border-right: 2px solid var(--border-color);
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .preview-panel {
+            background: white;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+            padding: 3rem;
+        }
+
+        /* Form Sections */
+        .form-section {
+            background: white;
+            margin: 1.5rem;
+            padding: 2rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--asu-gold);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .section-header h2 {
+            color: var(--asu-purple);
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            font-size: 1.75rem;
+        }
+
+        .toggle-icon {
+            color: var(--text-light);
+            font-size: 1.25rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-content {
+            display: block;
+        }
+
+        .section-content.collapsed {
+            display: none;
+        }
+
+        .section-header.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+
+        /* Quick Start Guide Styles */
+        .guide-section {
+            background: linear-gradient(135deg, var(--asu-purple-light) 0%, #fff 100%);
+            border: 2px solid var(--asu-purple);
+        }
+
+        .guide-content {
+            line-height: 1.8;
+        }
+
+        .guide-content h3 {
+            color: var(--asu-purple);
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .guide-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .guide-steps {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-steps li {
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .guide-steps strong {
+            color: var(--asu-purple);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .guide-steps p {
+            margin: 0;
+            color: var(--text-medium);
+        }
+
+        .guide-tips {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            list-style-type: disc;
+        }
+
+        .guide-tips li {
+            margin-bottom: 0.75rem;
+            color: var(--text-medium);
+        }
+
+        .guide-tips strong {
+            color: var(--text-dark);
+        }
+
+        .guide-footer {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .guide-footer p {
+            margin: 0;
+            font-style: italic;
+            color: var(--text-medium);
+        }
+
+        .guide-footer a {
+            color: var(--asu-purple);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .guide-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .help-text {
+            display: block;
+            font-size: 0.825rem;
+            color: var(--text-medium);
+            margin-top: 0.25rem;
+            font-style: italic;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--asu-purple);
+            box-shadow: 0 0 0 3px rgba(81, 45, 109, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+            line-height: 1.6;
+        }
+
+        /* Schedule Builder */
+        .module-card {
+            background: var(--background-light);
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--asu-purple);
+            position: relative;
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .module-number {
+            font-weight: 700;
+            color: var(--asu-purple);
+            font-size: 1.1rem;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+
+        .add-schedule-btn {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--asu-purple-light);
+            color: var(--asu-purple);
+            border: 2px dashed var(--asu-purple);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .add-schedule-btn:hover {
+            background: var(--asu-purple);
+            color: white;
+            border-style: solid;
+        }
+
+        /* Preview Styles */
+        #preview {
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 11pt;
+            line-height: 1.8;
+            color: #000;
+        }
+
+        #preview .preview-header {
+            background: white;
+            color: #000;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 3px solid #000;
+        }
+
+        #preview .university-name {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #000;
+        }
+
+        #preview .course-title {
+            text-align: center;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        #preview .course-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        #preview .course-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem 2rem;
+            margin-top: 1.5rem;
+            padding: 1rem 0;
+        }
+
+        #preview .info-item {
+            padding: 0.25rem 0;
+            font-size: 10.5pt;
+        }
+
+        #preview .info-label {
+            font-weight: 700;
+            color: #000;
+            margin-right: 0.5rem;
+        }
+
+        #preview h2 {
+            color: #000;
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid #000;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #preview h2:first-of-type {
+            margin-top: 0;
+        }
+
+        #preview h3 {
+            color: #000;
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        #preview p {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        #preview ul,
+        #preview ol {
+            margin-left: 2rem;
+            margin-bottom: 1.25rem;
+        }
+
+        #preview li {
+            margin-bottom: 0.5rem;
+        }
+
+        #preview .policy-box {
+            background: #f9f9f9;
+            padding: 1.25rem;
+            border-left: 3px solid #000;
+            margin: 1.25rem 0;
+        }
+
+        #preview .policy-box h3 {
+            margin-top: 0;
+        }
+
+        #preview table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        #preview table th,
+        #preview table td {
+            border: 1px solid #000;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        #preview table th {
+            background: #e0e0e0;
+            color: #000;
+            font-weight: 700;
+        }
+
+        #preview table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        #preview .schedule-week {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        #preview .schedule-week:last-child {
+            border-bottom: none;
+        }
+
+        #preview .empty-preview {
+            text-align: center;
+            color: var(--text-light);
+            padding: 4rem 2rem;
+        }
+
+        #preview .empty-preview-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--asu-purple);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            animation: slideIn 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        .app-footer {
+            background: var(--background-light);
+            padding: 1rem 2.5rem;
+            border-top: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .app-footer p {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            margin: 0;
+        }
+
+        .app-footer a {
+            color: var(--asu-purple);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .app-footer a:hover {
+            color: var(--asu-purple-dark);
+            text-decoration: underline;
+        }
+
+        /* Print Styles */
+        @media print {
+            .editor-panel,
+            .action-bar,
+            .app-footer {
+                display: none !important;
+            }
+
+            .main-content {
+                display: block;
+            }
+
+            .preview-panel {
+                max-height: none;
+                overflow: visible;
+                padding: 0;
+            }
+
+            .app-container {
+                box-shadow: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            #preview {
+                font-size: 11pt;
+                line-height: 1.6;
+            }
+
+            #preview .preview-header {
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+                margin-bottom: 1.5rem !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border-bottom: 2px solid #000;
+                page-break-after: avoid;
+            }
+
+            #preview .university-name {
+                font-size: 14pt;
+                color: #000 !important;
+                margin-bottom: 0.5rem;
+            }
+
+            #preview .course-title {
+                font-size: 16pt;
+                color: #000 !important;
+                margin-bottom: 0.5rem;
+            }
+
+            #preview .course-subtitle {
+                font-size: 13pt;
+                color: #000 !important;
+                margin-bottom: 1rem;
+            }
+
+            #preview .course-info-grid {
+                display: block;
+                margin-top: 1rem;
+            }
+
+            #preview .info-item {
+                background: none !important;
+                padding: 0.25rem 0;
+                display: block;
+                border-radius: 0;
+            }
+
+            #preview .info-label {
+                color: #000 !important;
+            }
+
+            #preview h2 {
+                color: #000 !important;
+                border-bottom: 2px solid #000 !important;
+                font-size: 13pt;
+                page-break-after: avoid;
+            }
+
+            #preview h3 {
+                color: #000 !important;
+                font-size: 11pt;
+                page-break-after: avoid;
+            }
+
+            #preview .policy-box {
+                background: white !important;
+                border-left: 2px solid #000;
+                page-break-inside: avoid;
+            }
+
+            #preview table th {
+                background: #e0e0e0 !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            #preview .schedule-week {
+                page-break-inside: avoid;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .editor-panel {
+                border-right: none;
+                border-bottom: 2px solid var(--border-color);
+                max-height: none;
+            }
+
+            .preview-panel {
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .action-bar {
+                padding: 1rem;
+            }
+
+            .form-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .preview-panel {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <h1>PROFESSIONAL SYLLABUS GENERATOR</h1>
+                <p>Create comprehensive, publication-ready course syllabi</p>
+            </div>
+        </header>
+
+        <div class="action-bar">
+            <button class="btn btn-primary" onclick="updatePreview()">
+                <span class="btn-icon">🔄</span>
+                Update Preview
+            </button>
+            <button class="btn btn-secondary" onclick="exportToWord()">
+                <span class="btn-icon">📄</span>
+                Export to Word
+            </button>
+            <button class="btn btn-secondary" onclick="exportToPDF()">
+                <span class="btn-icon">📑</span>
+                Export to PDF
+            </button>
+            <button class="btn btn-outline" onclick="saveDraft()">
+                <span class="btn-icon">💾</span>
+                Save Draft
+            </button>
+            <button class="btn btn-outline" onclick="loadDraft()">
+                <span class="btn-icon">📂</span>
+                Load Draft
+            </button>
+            <button class="btn btn-outline" onclick="clearForm()">
+                <span class="btn-icon">🗑️</span>
+                Clear All
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="editor-panel">
+                <!-- Quick Start Guide -->
+                <section class="form-section guide-section">
+                    <div class="section-header collapsed" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📘</span> Quick Start Guide</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content collapsed">
+                        <div class="guide-content">
+                            <h3>Getting Started (3 Steps)</h3>
+                            <ol class="guide-steps">
+                                <li>
+                                    <strong>Fill in Your Information</strong>
+                                    <p>Start with your university name and basic course information. Click section headers to expand/collapse. All fields are optional - use only what you need!</p>
+                                </li>
+                                <li>
+                                    <strong>Preview Your Syllabus</strong>
+                                    <p>Click "Update Preview" to see your syllabus in real-time. The preview shows exactly how your final document will look.</p>
+                                </li>
+                                <li>
+                                    <strong>Export Your Work</strong>
+                                    <p>Click "Export to Word" for an editable .doc file, or "Export to PDF" for a print-ready document.</p>
+                                </li>
+                            </ol>
+
+                            <h3>Pro Tips</h3>
+                            <ul class="guide-tips">
+                                <li><strong>Save Often:</strong> Click "Save Draft" to save your work locally in your browser</li>
+                                <li><strong>Customize Schedule:</strong> Use the schedule builder to add as many weeks/modules/units as your course needs</li>
+                                <li><strong>Use Placeholders:</strong> Gray placeholder text provides examples and guidance</li>
+                                <li><strong>Learning Outcomes:</strong> Start each outcome with "Students will be able to..." and use action verbs (analyze, evaluate, create)</li>
+                                <li><strong>Leave Blank Fields:</strong> Only fill in sections relevant to your course - blank fields won't appear in the final syllabus</li>
+                            </ul>
+
+                            <h3>Time Estimates</h3>
+                            <ul class="guide-tips">
+                                <li><strong>New Syllabus:</strong> 30-45 minutes for a comprehensive document</li>
+                                <li><strong>Update Existing:</strong> 15-20 minutes to revise dates and policies</li>
+                                <li><strong>Quick Version:</strong> 10-15 minutes for essential information only</li>
+                            </ul>
+
+                            <h3>Recommended Workflow</h3>
+                            <ol class="guide-steps">
+                                <li>University Name & Basic Course Information (5 min)</li>
+                                <li>Instructor Information (5 min)</li>
+                                <li>Course Description & Learning Outcomes (10 min)</li>
+                                <li>Assessment & Grading (10 min)</li>
+                                <li>Course Schedule (10 min)</li>
+                                <li>Policies (5-10 min)</li>
+                                <li>Review & Export (5 min)</li>
+                            </ol>
+
+                            <h3>Need Help?</h3>
+                            <p><strong>Problem:</strong> Preview doesn't update → <strong>Solution:</strong> Click the "Update Preview" button</p>
+                            <p><strong>Problem:</strong> Can't find saved draft → <strong>Solution:</strong> Use the same browser and device</p>
+                            <p><strong>Problem:</strong> Export not working → <strong>Solution:</strong> Check that pop-ups aren't blocked</p>
+                            
+                            <div class="guide-footer">
+                                <p><em>Created by <a href="https://www.linkedin.com/in/beingbabu/" target="_blank" rel="noopener noreferrer">Babu George, PhD</a></em></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic Course Information -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📚</span> Basic Course Information</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="universityName">University Name</label>
+                            <input type="text" id="universityName" placeholder="e.g., Alcorn State University">
+                            <span class="help-text">Enter your institution's name - appears at the top of your syllabus</span>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="college">College</label>
+                                <input type="text" id="college" placeholder="e.g., College of Arts and Sciences">
+                            </div>
+                            <div class="form-group">
+                                <label for="department">Department</label>
+                                <input type="text" id="department" placeholder="e.g., Department of Biology">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseTitle">Course Title</label>
+                            <input type="text" id="courseTitle" placeholder="e.g., BIOL 101: Introduction to Biology">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="semester">Semester</label>
+                                <input type="text" id="semester" placeholder="e.g., Fall 2024">
+                            </div>
+                            <div class="form-group">
+                                <label for="creditHours">Credit Hours</label>
+                                <input type="text" id="creditHours" placeholder="e.g., 3">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="modality">Course Modality</label>
+                                <select id="modality">
+                                    <option value="">Select modality</option>
+                                    <option value="In-Person">In-Person</option>
+                                    <option value="Online">Online</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                    <option value="Hyflex">Hyflex</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="meetingTime">Meeting Time</label>
+                                <input type="text" id="meetingTime" placeholder="e.g., MWF 10:00-10:50 AM">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="meetingLocation">Meeting Location</label>
+                                <input type="text" id="meetingLocation" placeholder="e.g., Science Building, Room 201">
+                            </div>
+                            <div class="form-group">
+                                <label for="courseUrl">Course Website/LMS URL</label>
+                                <input type="url" id="courseUrl" placeholder="e.g., https://canvas.alcorn.edu/courses/12345">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseFormat">Course Format & Pedagogy</label>
+                            <textarea id="courseFormat" placeholder="Describe how the course will be taught (e.g., lecture, seminar, lab, flipped classroom, team-based learning) and typical class session structure."></textarea>
+                            <span class="help-text">Help students understand what to expect in a typical class session</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="expectedWorkload">Expected Workload & Time Commitment</label>
+                            <textarea id="expectedWorkload" placeholder="Describe expected hours per week outside of class and how time will be spent (e.g., 'This 3-credit course requires approximately 6-9 hours per week outside of class for reading, assignments, and exam preparation')."></textarea>
+                            <span class="help-text">Carnegie Unit standard: 2-3 hours of outside work per credit hour per week</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Instructor Information -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">👤</span> Instructor Information</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="instructorName">Instructor Name</label>
+                            <input type="text" id="instructorName" placeholder="e.g., Dr. Jane Smith">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="officeLocation">Office Location</label>
+                                <input type="text" id="officeLocation" placeholder="e.g., Science Building, Room 305">
+                            </div>
+                            <div class="form-group">
+                                <label for="officePhone">Office Phone</label>
+                                <input type="tel" id="officePhone" placeholder="e.g., (601) 555-1234">
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="contactEmail">Email Address</label>
+                                <input type="email" id="contactEmail" placeholder="e.g., jsmith@alcorn.edu">
+                            </div>
+                            <div class="form-group">
+                                <label for="officeHours">Office Hours</label>
+                                <input type="text" id="officeHours" placeholder="e.g., MW 2:00-4:00 PM, or by appointment">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentUrl">Appointment Scheduling Link</label>
+                            <input type="url" id="appointmentUrl" placeholder="e.g., https://calendly.com/jsmith">
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredContact">Preferred Communication Method</label>
+                            <textarea id="preferredContact" placeholder="Describe your preferred way for students to contact you and expected response time."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Course Description & Learning Outcomes -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">🎯</span> Course Description & Learning Outcomes</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="courseDescription">Course Description</label>
+                            <textarea id="courseDescription" placeholder="Provide a comprehensive description of the course content and objectives."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="prerequisites">Prerequisites</label>
+                            <textarea id="prerequisites" placeholder="List any prerequisite courses or requirements."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="learningOutcomes">Student Learning Outcomes</label>
+                            <textarea id="learningOutcomes" placeholder="List measurable learning outcomes. Use action verbs from Bloom's Taxonomy (analyze, evaluate, create, etc.)."></textarea>
+                            <span class="help-text">Tip: Start each outcome with "Students will be able to..."</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Required Materials -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📖</span> Required Materials</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="textbooks">Textbooks & Readings</label>
+                            <textarea id="textbooks" placeholder="List required and recommended textbooks with full citations, including ISBN numbers."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="techRequirements">Technology Requirements</label>
+                            <textarea id="techRequirements" placeholder="Describe any required software, hardware, or online platforms students will need."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Assessment & Grading -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📊</span> Assessment & Grading</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="assessmentBreakdown">Assessment Components & Weights</label>
+                            <textarea id="assessmentBreakdown" placeholder="List all graded components and their percentage weights (e.g., Exams: 40%, Assignments: 30%, etc.)."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="gradingScale">Grading Scale</label>
+                            <textarea id="gradingScale" placeholder="Specify your grading scale (e.g., A: 90-100, B: 80-89, etc.)."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="assignmentDetails">Assignment Descriptions</label>
+                            <textarea id="assignmentDetails" placeholder="Provide brief descriptions of major assignments, projects, and exams."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="makeupPolicy">Makeup Work Policy</label>
+                            <textarea id="makeupPolicy" placeholder="Explain procedures for making up missed exams or assignments due to illness, emergencies, or other valid reasons. Include documentation requirements and deadlines."></textarea>
+                            <span class="help-text">Be clear about what constitutes an excused absence and required documentation</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="incompletePolicy">Incomplete Grade Policy</label>
+                            <textarea id="incompletePolicy" placeholder="Describe conditions under which an 'I' (Incomplete) grade may be granted and the timeline for completion."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="gradeAppeals">Grade Appeals & Dispute Process</label>
+                            <textarea id="gradeAppeals" placeholder="Explain how students can contest grades, including timeline and procedures for appeals."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Course Schedule -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📅</span> Course Schedule</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="scheduleNotes">Schedule Notes</label>
+                            <textarea id="scheduleNotes" placeholder="Add any general notes about the schedule (e.g., 'Schedule is subject to change with advance notice')."></textarea>
+                        </div>
+                        <div id="scheduleContainer"></div>
+                        <button class="add-schedule-btn" onclick="addScheduleItem()">+ Add Schedule Item</button>
+                    </div>
+                </section>
+
+                <!-- Course Policies -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">📋</span> Course-Specific Policies</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="attendancePolicy">Attendance Policy</label>
+                            <textarea id="attendancePolicy" placeholder="Describe your attendance requirements and consequences for absences."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="latePolicy">Late Work Policy</label>
+                            <textarea id="latePolicy" placeholder="Explain how late submissions will be handled."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="participationPolicy">Class Participation</label>
+                            <textarea id="participationPolicy" placeholder="Describe expectations for class participation and engagement."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="technologyPolicy">Technology Use Policy</label>
+                            <textarea id="technologyPolicy" placeholder="Specify rules for using laptops, phones, and other devices in class."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="aiPolicy">Artificial Intelligence Policy</label>
+                            <textarea id="aiPolicy" placeholder="Clarify if and how students may use AI tools like ChatGPT for coursework."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="conductPolicy">Professional Conduct</label>
+                            <textarea id="conductPolicy" placeholder="Outline expectations for respectful behavior and professional conduct."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="collaborationPolicy">Collaboration Guidelines</label>
+                            <textarea id="collaborationPolicy" placeholder="Clarify when collaboration is encouraged versus prohibited. Distinguish between acceptable collaboration and plagiarism."></textarea>
+                            <span class="help-text">Be specific about which assignments allow group work and which require individual effort</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="citationStyle">Citation Style Requirements</label>
+                            <textarea id="citationStyle" placeholder="Specify required citation format (e.g., APA 7th edition, MLA, Chicago) and provide resources for proper citation."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="recordingPolicy">Recording & Photography Policy</label>
+                            <textarea id="recordingPolicy" placeholder="State whether students may record lectures or take photographs in class. Address privacy and consent considerations."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="additionalCoursePolicies">Additional Course Policies</label>
+                            <textarea id="additionalCoursePolicies" placeholder="Include any other course-specific policies not covered above."></textarea>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- University Policies -->
+                <section class="form-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h2><span class="section-icon">🏛️</span> University Policies</h2>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-group">
+                            <label for="diversityStatement">Diversity, Equity & Inclusion Statement</label>
+                            <textarea id="diversityStatement" placeholder="Express your commitment to creating an inclusive learning environment and how diverse perspectives will be valued and incorporated."></textarea>
+                            <span class="help-text">Demonstrate how you'll create a welcoming environment for all students</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="academicIntegrity">Academic Integrity Policy</label>
+                            <textarea id="academicIntegrity" placeholder="Include university's academic honesty policy and consequences for violations."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="disabilityPolicy">Disability Accommodations</label>
+                            <textarea id="disabilityPolicy" placeholder="Provide information about disability services and how students can request accommodations."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="religiousObservances">Religious Observances Policy</label>
+                            <textarea id="religiousObservances" placeholder="Explain how students can request accommodations for religious holidays and required advance notice."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="preferredNames">Preferred Names & Pronouns</label>
+                            <textarea id="preferredNames" placeholder="Explain how students can indicate their preferred names and pronouns, and your commitment to using them."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="titleIXPolicy">Title IX & Non-Discrimination</label>
+                            <textarea id="titleIXPolicy" placeholder="Include Title IX statement and reporting procedures for discrimination or harassment."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mentalHealthResources">Mental Health & Wellness Resources</label>
+                            <textarea id="mentalHealthResources" placeholder="Provide information about campus counseling services, crisis hotlines, and wellness programs available to students."></textarea>
+                            <span class="help-text">Include specific contact information and hours for mental health services</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="supportServices">Student Support Services</label>
+                            <textarea id="supportServices" placeholder="List campus resources like tutoring, writing center, library services, career services, etc."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emailPolicy">Email & Communication Policy</label>
+                            <textarea id="emailPolicy" placeholder="Specify requirements for using university email and professional communication standards."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="emergencyProcedures">Emergency Procedures</label>
+                            <textarea id="emergencyProcedures" placeholder="Describe what to do during campus emergencies and how class cancellations or modifications will be communicated."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="courseEvaluation">Course Evaluation</label>
+                            <textarea id="courseEvaluation" placeholder="Explain when course evaluations occur, how they're conducted, and why student feedback is important for continuous improvement."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="otherPolicies">Additional Policies</label>
+                            <textarea id="otherPolicies" placeholder="Include any other relevant university or departmental policies."></textarea>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="preview-panel">
+                <div id="preview">
+                    <div class="empty-preview">
+                        <div class="empty-preview-icon">📄</div>
+                        <p>Your syllabus preview will appear here.</p>
+                        <p>Fill in the form fields and click "Update Preview" to see your syllabus.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="app-footer">
+            <p>Conceived, designed and developed by <a href="https://www.linkedin.com/in/beingbabu/" target="_blank" rel="noopener noreferrer">Babu George, PhD</a></p>
+        </footer>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        let scheduleCount = 0;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            addScheduleItem();
+            updatePreview();
+        });
+
+        // Toggle section collapse
+        function toggleSection(header) {
+            header.classList.toggle('collapsed');
+            const content = header.nextElementSibling;
+            content.classList.toggle('collapsed');
+        }
+
+        // Add schedule item
+        function addScheduleItem() {
+            scheduleCount++;
+            const container = document.getElementById('scheduleContainer');
+            const moduleCard = document.createElement('div');
+            moduleCard.className = 'module-card';
+            moduleCard.innerHTML = `
+                <div class="module-header">
+                    <span class="module-number">Item ${scheduleCount}</span>
+                    ${scheduleCount > 1 ? '<button class="remove-btn" onclick="removeScheduleItem(this)">Remove</button>' : ''}
+                </div>
+                <div class="form-group">
+                    <label>Item Label</label>
+                    <input type="text" class="schedule-label" placeholder="e.g., Week 1, Module 3, Unit 2">
+                    <span class="help-text">Customize the label for this schedule item based on your course structure</span>
+                </div>
+                <div class="form-group">
+                    <label>Title/Topic</label>
+                    <input type="text" class="schedule-title" placeholder="e.g., Introduction to Cell Biology">
+                </div>
+                <div class="form-group">
+                    <label>Dates</label>
+                    <input type="text" class="schedule-dates" placeholder="e.g., Jan 15-19">
+                </div>
+                <div class="form-group">
+                    <label>Topics Covered</label>
+                    <textarea class="schedule-topics" placeholder="List main topics for this period"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Readings & Materials</label>
+                    <textarea class="schedule-readings" placeholder="List required readings or materials"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Assignments Due</label>
+                    <textarea class="schedule-assignments" placeholder="List assignments due this period"></textarea>
+                </div>
+            `;
+            container.appendChild(moduleCard);
+        }
+
+        // Remove schedule item
+        function removeScheduleItem(btn) {
+            btn.closest('.module-card').remove();
+            renumberScheduleItems();
+        }
+
+        // Renumber schedule items
+        function renumberScheduleItems() {
+            const items = document.querySelectorAll('.module-card');
+            items.forEach((item, index) => {
+                item.querySelector('.module-number').textContent = `Item ${index + 1}`;
+            });
+            scheduleCount = items.length;
+        }
+
+        // HTML escape function
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Update preview
+        function updatePreview() {
+            let html = '';
+            
+            // Header
+            html += '<div class="preview-header">';
+            
+            const universityName = document.getElementById('universityName').value;
+            if (universityName) {
+                html += `<div class="university-name">${escapeHtml(universityName)}</div>`;
+            }
+            
+            html += '<div class="course-title">COURSE SYLLABUS</div>';
+            
+            const courseTitle = document.getElementById('courseTitle').value;
+            const semester = document.getElementById('semester').value;
+            
+            if (courseTitle) {
+                html += `<div class="course-subtitle">${escapeHtml(courseTitle)}</div>`;
+            }
+            
+            // Course info grid
+            const infoItems = [
+                { label: 'College', value: document.getElementById('college').value },
+                { label: 'Department', value: document.getElementById('department').value },
+                { label: 'Semester', value: semester },
+                { label: 'Credit Hours', value: document.getElementById('creditHours').value },
+                { label: 'Modality', value: document.getElementById('modality').value },
+                { label: 'Meeting Time', value: document.getElementById('meetingTime').value },
+                { label: 'Location', value: document.getElementById('meetingLocation').value },
+                { label: 'Course Website', value: document.getElementById('courseUrl').value }
+            ];
+            
+            const filledItems = infoItems.filter(item => item.value);
+            if (filledItems.length > 0) {
+                html += '<div class="course-info-grid">';
+                filledItems.forEach(item => {
+                    const displayValue = item.label === 'Course Website' && item.value
+                        ? `<a href="${escapeHtml(item.value)}" target="_blank">${escapeHtml(item.value)}</a>`
+                        : escapeHtml(item.value);
+                    html += `<div class="info-item"><span class="info-label">${item.label}:</span>${displayValue}</div>`;
+                });
+                html += '</div>';
+            }
+            
+            html += '</div>'; // End header
+            
+            // Course Overview (Format & Workload)
+            const courseFormat = document.getElementById('courseFormat').value;
+            const expectedWorkload = document.getElementById('expectedWorkload').value;
+            
+            if (courseFormat || expectedWorkload) {
+                html += '<h2>Course Overview</h2>';
+                if (courseFormat) {
+                    html += '<h3>Course Format & Pedagogy</h3>';
+                    html += `<p>${escapeHtml(courseFormat).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (expectedWorkload) {
+                    html += '<h3>Expected Workload</h3>';
+                    html += `<p>${escapeHtml(expectedWorkload).replace(/\n/g, '<br>')}</p>`;
+                }
+            }
+            
+            // Instructor Information
+            const instructorName = document.getElementById('instructorName').value;
+            const officeLocation = document.getElementById('officeLocation').value;
+            const officePhone = document.getElementById('officePhone').value;
+            const contactEmail = document.getElementById('contactEmail').value;
+            const officeHours = document.getElementById('officeHours').value;
+            const appointmentUrl = document.getElementById('appointmentUrl').value;
+            const preferredContact = document.getElementById('preferredContact').value;
+            
+            if (instructorName || officeLocation || officePhone || contactEmail || officeHours || appointmentUrl || preferredContact) {
+                html += '<h2>Instructor Information</h2>';
+                if (instructorName) html += `<p><strong>Instructor:</strong> ${escapeHtml(instructorName)}</p>`;
+                if (officeLocation) html += `<p><strong>Office:</strong> ${escapeHtml(officeLocation)}</p>`;
+                if (officePhone) html += `<p><strong>Phone:</strong> ${escapeHtml(officePhone)}</p>`;
+                if (contactEmail) html += `<p><strong>Email:</strong> <a href="mailto:${escapeHtml(contactEmail)}">${escapeHtml(contactEmail)}</a></p>`;
+                if (officeHours) html += `<p><strong>Office Hours:</strong> ${escapeHtml(officeHours)}</p>`;
+                if (appointmentUrl) html += `<p><strong>Schedule Appointment:</strong> <a href="${escapeHtml(appointmentUrl)}" target="_blank">${escapeHtml(appointmentUrl)}</a></p>`;
+                if (preferredContact) html += `<p><strong>Communication Policy:</strong> ${escapeHtml(preferredContact).replace(/\n/g, '<br>')}</p>`;
+            }
+            
+            // Course Description
+            const courseDescription = document.getElementById('courseDescription').value;
+            const prerequisites = document.getElementById('prerequisites').value;
+            const learningOutcomes = document.getElementById('learningOutcomes').value;
+            
+            if (courseDescription || prerequisites || learningOutcomes) {
+                html += '<h2>Course Description & Learning Outcomes</h2>';
+                if (courseDescription) html += `<p>${escapeHtml(courseDescription).replace(/\n/g, '<br>')}</p>`;
+                if (prerequisites) {
+                    html += '<h3>Prerequisites</h3>';
+                    html += `<p>${escapeHtml(prerequisites).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (learningOutcomes) {
+                    html += '<h3>Student Learning Outcomes</h3>';
+                    html += `<p>${escapeHtml(learningOutcomes).replace(/\n/g, '<br>')}</p>`;
+                }
+            }
+            
+            // Required Materials
+            const textbooks = document.getElementById('textbooks').value;
+            const techRequirements = document.getElementById('techRequirements').value;
+            
+            if (textbooks || techRequirements) {
+                html += '<h2>Required Materials</h2>';
+                if (textbooks) {
+                    html += '<h3>Textbooks & Readings</h3>';
+                    html += `<p>${escapeHtml(textbooks).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (techRequirements) {
+                    html += '<h3>Technology Requirements</h3>';
+                    html += `<p>${escapeHtml(techRequirements).replace(/\n/g, '<br>')}</p>`;
+                }
+            }
+            
+            // Assessment & Grading
+            const assessmentBreakdown = document.getElementById('assessmentBreakdown').value;
+            const gradingScale = document.getElementById('gradingScale').value;
+            const assignmentDetails = document.getElementById('assignmentDetails').value;
+            const makeupPolicy = document.getElementById('makeupPolicy').value;
+            const incompletePolicy = document.getElementById('incompletePolicy').value;
+            const gradeAppeals = document.getElementById('gradeAppeals').value;
+            
+            if (assessmentBreakdown || gradingScale || assignmentDetails || makeupPolicy || incompletePolicy || gradeAppeals) {
+                html += '<h2>Assessment & Grading</h2>';
+                if (assessmentBreakdown) {
+                    html += '<h3>Grade Components</h3>';
+                    html += `<p>${escapeHtml(assessmentBreakdown).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (gradingScale) {
+                    html += '<h3>Grading Scale</h3>';
+                    html += `<p>${escapeHtml(gradingScale).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (assignmentDetails) {
+                    html += '<h3>Assignment Descriptions</h3>';
+                    html += `<p>${escapeHtml(assignmentDetails).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (makeupPolicy) {
+                    html += '<h3>Makeup Work Policy</h3>';
+                    html += `<p>${escapeHtml(makeupPolicy).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (incompletePolicy) {
+                    html += '<h3>Incomplete Grade Policy</h3>';
+                    html += `<p>${escapeHtml(incompletePolicy).replace(/\n/g, '<br>')}</p>`;
+                }
+                if (gradeAppeals) {
+                    html += '<h3>Grade Appeals Process</h3>';
+                    html += `<p>${escapeHtml(gradeAppeals).replace(/\n/g, '<br>')}</p>`;
+                }
+            }
+            
+            // Course Schedule
+            const scheduleNotes = document.getElementById('scheduleNotes').value;
+            const scheduleItems = document.querySelectorAll('.module-card');
+            const hasScheduleContent = Array.from(scheduleItems).some(item => 
+                item.querySelector('.schedule-title').value ||
+                item.querySelector('.schedule-dates').value ||
+                item.querySelector('.schedule-topics').value ||
+                item.querySelector('.schedule-readings').value ||
+                item.querySelector('.schedule-assignments').value
+            );
+            
+            if (scheduleNotes || hasScheduleContent) {
+                html += '<h2>Course Schedule</h2>';
+                if (scheduleNotes) {
+                    html += `<p><em>${escapeHtml(scheduleNotes).replace(/\n/g, '<br>')}</em></p>`;
+                }
+                
+                scheduleItems.forEach(item => {
+                    const label = item.querySelector('.schedule-label').value;
+                    const title = item.querySelector('.schedule-title').value;
+                    const dates = item.querySelector('.schedule-dates').value;
+                    const topics = item.querySelector('.schedule-topics').value;
+                    const readings = item.querySelector('.schedule-readings').value;
+                    const assignments = item.querySelector('.schedule-assignments').value;
+                    
+                    if (title || dates || topics || readings || assignments) {
+                        html += '<div class="schedule-week">';
+                        if (label) {
+                            html += `<h3>${escapeHtml(label)}: ${escapeHtml(title)}</h3>`;
+                        } else if (title) {
+                            html += `<h3>${escapeHtml(title)}</h3>`;
+                        }
+                        if (dates) html += `<p><strong>Dates:</strong> ${escapeHtml(dates)}</p>`;
+                        if (topics) html += `<p><strong>Topics:</strong> ${escapeHtml(topics).replace(/\n/g, '<br>')}</p>`;
+                        if (readings) html += `<p><strong>Readings:</strong> ${escapeHtml(readings).replace(/\n/g, '<br>')}</p>`;
+                        if (assignments) html += `<p><strong>Assignments Due:</strong> ${escapeHtml(assignments).replace(/\n/g, '<br>')}</p>`;
+                        html += '</div>';
+                    }
+                });
+            }
+            
+            // Course Policies
+            const attendancePolicy = document.getElementById('attendancePolicy').value;
+            const latePolicy = document.getElementById('latePolicy').value;
+            const participationPolicy = document.getElementById('participationPolicy').value;
+            const technologyPolicy = document.getElementById('technologyPolicy').value;
+            const aiPolicy = document.getElementById('aiPolicy').value;
+            const conductPolicy = document.getElementById('conductPolicy').value;
+            const collaborationPolicy = document.getElementById('collaborationPolicy').value;
+            const citationStyle = document.getElementById('citationStyle').value;
+            const recordingPolicy = document.getElementById('recordingPolicy').value;
+            const additionalCoursePolicies = document.getElementById('additionalCoursePolicies').value;
+            
+            if (attendancePolicy || latePolicy || participationPolicy || technologyPolicy || aiPolicy || conductPolicy || collaborationPolicy || citationStyle || recordingPolicy || additionalCoursePolicies) {
+                html += '<h2>Course Policies</h2>';
+                
+                if (attendancePolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Attendance Policy</h3>';
+                    html += `<p>${escapeHtml(attendancePolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (latePolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Late Work Policy</h3>';
+                    html += `<p>${escapeHtml(latePolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (participationPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Class Participation</h3>';
+                    html += `<p>${escapeHtml(participationPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (technologyPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Technology Use</h3>';
+                    html += `<p>${escapeHtml(technologyPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (aiPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Artificial Intelligence Policy</h3>';
+                    html += `<p>${escapeHtml(aiPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (conductPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Professional Conduct</h3>';
+                    html += `<p>${escapeHtml(conductPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (collaborationPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Collaboration Guidelines</h3>';
+                    html += `<p>${escapeHtml(collaborationPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (citationStyle) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Citation Style Requirements</h3>';
+                    html += `<p>${escapeHtml(citationStyle).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (recordingPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Recording & Photography Policy</h3>';
+                    html += `<p>${escapeHtml(recordingPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (additionalCoursePolicies) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Additional Course Policies</h3>';
+                    html += `<p>${escapeHtml(additionalCoursePolicies).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+            }
+            
+            // University Policies
+            const diversityStatement = document.getElementById('diversityStatement').value;
+            const academicIntegrity = document.getElementById('academicIntegrity').value;
+            const disabilityPolicy = document.getElementById('disabilityPolicy').value;
+            const religiousObservances = document.getElementById('religiousObservances').value;
+            const preferredNames = document.getElementById('preferredNames').value;
+            const titleIXPolicy = document.getElementById('titleIXPolicy').value;
+            const mentalHealthResources = document.getElementById('mentalHealthResources').value;
+            const supportServices = document.getElementById('supportServices').value;
+            const emailPolicy = document.getElementById('emailPolicy').value;
+            const emergencyProcedures = document.getElementById('emergencyProcedures').value;
+            const courseEvaluation = document.getElementById('courseEvaluation').value;
+            const otherPolicies = document.getElementById('otherPolicies').value;
+            
+            if (diversityStatement || academicIntegrity || disabilityPolicy || religiousObservances || preferredNames || titleIXPolicy || mentalHealthResources || supportServices || emailPolicy || emergencyProcedures || courseEvaluation || otherPolicies) {
+                html += '<h2>University Policies</h2>';
+                
+                if (diversityStatement) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Diversity, Equity & Inclusion</h3>';
+                    html += `<p>${escapeHtml(diversityStatement).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (academicIntegrity) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Academic Integrity</h3>';
+                    html += `<p>${escapeHtml(academicIntegrity).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (disabilityPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Disability Accommodations</h3>';
+                    html += `<p>${escapeHtml(disabilityPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (religiousObservances) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Religious Observances</h3>';
+                    html += `<p>${escapeHtml(religiousObservances).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (preferredNames) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Preferred Names & Pronouns</h3>';
+                    html += `<p>${escapeHtml(preferredNames).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (titleIXPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Title IX & Non-Discrimination</h3>';
+                    html += `<p>${escapeHtml(titleIXPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (mentalHealthResources) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Mental Health & Wellness Resources</h3>';
+                    html += `<p>${escapeHtml(mentalHealthResources).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (supportServices) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Student Support Services</h3>';
+                    html += `<p>${escapeHtml(supportServices).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (emailPolicy) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Email & Communication</h3>';
+                    html += `<p>${escapeHtml(emailPolicy).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (emergencyProcedures) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Emergency Procedures</h3>';
+                    html += `<p>${escapeHtml(emergencyProcedures).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (courseEvaluation) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Course Evaluation</h3>';
+                    html += `<p>${escapeHtml(courseEvaluation).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+                
+                if (otherPolicies) {
+                    html += '<div class="policy-box">';
+                    html += '<h3>Additional Policies</h3>';
+                    html += `<p>${escapeHtml(otherPolicies).replace(/\n/g, '<br>')}</p>`;
+                    html += '</div>';
+                }
+            }
+            
+            // If no content, show empty state
+            if (!html) {
+                html = `
+                    <div class="empty-preview">
+                        <div class="empty-preview-icon">📄</div>
+                        <p>Your syllabus preview will appear here.</p>
+                        <p>Fill in the form fields to see your syllabus.</p>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('preview').innerHTML = html;
+        }
+
+        // Export to PDF
+        function exportToPDF() {
+            showNotification('Preparing PDF...', '📑');
+            
+            const element = document.getElementById('preview');
+            const courseTitle = document.getElementById('courseTitle').value || 'Course_Syllabus';
+            
+            const opt = {
+                margin: 0.5,
+                filename: `${courseTitle.replace(/[^a-z0-9]/gi, '_')}_Syllabus.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                showNotification('PDF downloaded successfully!', '✅');
+            });
+        }
+
+        // Export to Word
+        function exportToWord() {
+            showNotification('Preparing Word document...', '📄');
+            
+            const content = document.getElementById('preview').innerHTML;
+            const courseTitle = document.getElementById('courseTitle').value || 'Course_Syllabus';
+            
+            const docContent = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <title>${escapeHtml(courseTitle)}</title>
+                    <style>
+                        body { 
+                            font-family: "Times New Roman", Times, serif; 
+                            font-size: 11pt; 
+                            line-height: 1.6; 
+                            margin: 1in; 
+                            color: #000;
+                        }
+                        h1, h2, h3 { 
+                            font-family: Arial, sans-serif;
+                            color: #000;
+                        }
+                        h1 { 
+                            font-size: 16pt; 
+                            margin-top: 20pt; 
+                            margin-bottom: 10pt; 
+                            border-bottom: 2px solid #000; 
+                            padding-bottom: 10pt;
+                            text-transform: uppercase;
+                        }
+                        h2 { 
+                            font-size: 13pt; 
+                            margin-top: 18pt; 
+                            margin-bottom: 8pt; 
+                            border-bottom: 2px solid #000;
+                            padding-bottom: 6pt;
+                            text-transform: uppercase;
+                        }
+                        h3 { 
+                            font-size: 11pt; 
+                            margin-top: 12pt; 
+                            margin-bottom: 6pt;
+                            font-weight: bold;
+                        }
+                        p { 
+                            margin-bottom: 10pt; 
+                            text-align: left;
+                        }
+                        ul, ol { 
+                            margin-left: 20pt; 
+                            margin-bottom: 10pt; 
+                        }
+                        li { 
+                            margin-bottom: 6pt; 
+                        }
+                        .preview-header { 
+                            background-color: white;
+                            color: black; 
+                            padding: 0;
+                            margin-bottom: 20pt;
+                            border-bottom: 2px solid #000;
+                        }
+                        .university-name {
+                            text-align: center;
+                            font-size: 14pt;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            margin-bottom: 8pt;
+                            letter-spacing: 1pt;
+                        }
+                        .course-title {
+                            text-align: center;
+                            font-size: 16pt;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                        }
+                        .course-subtitle {
+                            text-align: center;
+                            font-size: 13pt;
+                            font-weight: bold;
+                        }
+                        .course-info-grid { 
+                            display: block;
+                            margin-top: 10pt;
+                        }
+                        .info-item { 
+                            margin-bottom: 6pt;
+                            padding: 0;
+                            background: none;
+                        }
+                        .info-label { 
+                            font-weight: bold; 
+                            color: #000; 
+                        }
+                        .policy-box { 
+                            background-color: #f9f9f9; 
+                            padding: 15pt; 
+                            border-left: 3px solid #000; 
+                            margin: 15pt 0; 
+                        }
+                        .schedule-week {
+                            margin-bottom: 15pt;
+                            padding-bottom: 10pt;
+                            border-bottom: 1pt solid #ccc;
+                        }
+                        a { 
+                            color: #000;
+                            text-decoration: underline;
+                        }
+                        table { 
+                            width: 100%; 
+                            border-collapse: collapse; 
+                            margin: 15pt 0; 
+                        }
+                        table th, table td { 
+                            border: 1pt solid #000; 
+                            padding: 8pt; 
+                            text-align: left; 
+                        }
+                        table th { 
+                            background-color: #e0e0e0; 
+                            color: #000;
+                            font-weight: bold;
+                        }
+                        .empty-preview {
+                            display: none;
+                        }
+                    </style>
+                </head>
+                <body>
+                    ${content}
+                </body>
+                </html>
+            `;
+            
+            const blob = new Blob(['\ufeff', docContent], {
+                type: 'application/msword'
+            });
+            
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${courseTitle.replace(/[^a-z0-9]/gi, '_')}_Syllabus.doc`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Word document downloaded successfully!', '✅');
+        }
+
+        // Save draft
+        function saveDraft() {
+            const formData = {
+                universityName: document.getElementById('universityName').value,
+                college: document.getElementById('college').value,
+                department: document.getElementById('department').value,
+                courseTitle: document.getElementById('courseTitle').value,
+                semester: document.getElementById('semester').value,
+                creditHours: document.getElementById('creditHours').value,
+                modality: document.getElementById('modality').value,
+                meetingTime: document.getElementById('meetingTime').value,
+                meetingLocation: document.getElementById('meetingLocation').value,
+                courseUrl: document.getElementById('courseUrl').value,
+                courseFormat: document.getElementById('courseFormat').value,
+                expectedWorkload: document.getElementById('expectedWorkload').value,
+                instructorName: document.getElementById('instructorName').value,
+                officeLocation: document.getElementById('officeLocation').value,
+                officePhone: document.getElementById('officePhone').value,
+                contactEmail: document.getElementById('contactEmail').value,
+                officeHours: document.getElementById('officeHours').value,
+                appointmentUrl: document.getElementById('appointmentUrl').value,
+                preferredContact: document.getElementById('preferredContact').value,
+                courseDescription: document.getElementById('courseDescription').value,
+                prerequisites: document.getElementById('prerequisites').value,
+                learningOutcomes: document.getElementById('learningOutcomes').value,
+                textbooks: document.getElementById('textbooks').value,
+                techRequirements: document.getElementById('techRequirements').value,
+                assessmentBreakdown: document.getElementById('assessmentBreakdown').value,
+                gradingScale: document.getElementById('gradingScale').value,
+                assignmentDetails: document.getElementById('assignmentDetails').value,
+                makeupPolicy: document.getElementById('makeupPolicy').value,
+                incompletePolicy: document.getElementById('incompletePolicy').value,
+                gradeAppeals: document.getElementById('gradeAppeals').value,
+                attendancePolicy: document.getElementById('attendancePolicy').value,
+                latePolicy: document.getElementById('latePolicy').value,
+                participationPolicy: document.getElementById('participationPolicy').value,
+                technologyPolicy: document.getElementById('technologyPolicy').value,
+                aiPolicy: document.getElementById('aiPolicy').value,
+                conductPolicy: document.getElementById('conductPolicy').value,
+                collaborationPolicy: document.getElementById('collaborationPolicy').value,
+                citationStyle: document.getElementById('citationStyle').value,
+                recordingPolicy: document.getElementById('recordingPolicy').value,
+                additionalCoursePolicies: document.getElementById('additionalCoursePolicies').value,
+                diversityStatement: document.getElementById('diversityStatement').value,
+                academicIntegrity: document.getElementById('academicIntegrity').value,
+                disabilityPolicy: document.getElementById('disabilityPolicy').value,
+                religiousObservances: document.getElementById('religiousObservances').value,
+                preferredNames: document.getElementById('preferredNames').value,
+                titleIXPolicy: document.getElementById('titleIXPolicy').value,
+                mentalHealthResources: document.getElementById('mentalHealthResources').value,
+                supportServices: document.getElementById('supportServices').value,
+                emailPolicy: document.getElementById('emailPolicy').value,
+                emergencyProcedures: document.getElementById('emergencyProcedures').value,
+                courseEvaluation: document.getElementById('courseEvaluation').value,
+                otherPolicies: document.getElementById('otherPolicies').value,
+                scheduleNotes: document.getElementById('scheduleNotes').value,
+                schedule: []
+            };
+            
+            const scheduleItems = document.querySelectorAll('.module-card');
+            scheduleItems.forEach(item => {
+                formData.schedule.push({
+                    label: item.querySelector('.schedule-label').value,
+                    title: item.querySelector('.schedule-title').value,
+                    dates: item.querySelector('.schedule-dates').value,
+                    topics: item.querySelector('.schedule-topics').value,
+                    readings: item.querySelector('.schedule-readings').value,
+                    assignments: item.querySelector('.schedule-assignments').value
+                });
+            });
+            
+            localStorage.setItem('asuSyllabusDraft', JSON.stringify(formData));
+            showNotification('Draft saved successfully!', '💾');
+        }
+
+        // Load draft
+        function loadDraft() {
+            const savedData = localStorage.getItem('asuSyllabusDraft');
+            if (!savedData) {
+                showNotification('No saved draft found', '⚠️');
+                return;
+            }
+            
+            try {
+                const formData = JSON.parse(savedData);
+                
+                document.getElementById('universityName').value = formData.universityName || '';
+                document.getElementById('college').value = formData.college || '';
+                document.getElementById('department').value = formData.department || '';
+                document.getElementById('courseTitle').value = formData.courseTitle || '';
+                document.getElementById('semester').value = formData.semester || '';
+                document.getElementById('creditHours').value = formData.creditHours || '';
+                document.getElementById('modality').value = formData.modality || '';
+                document.getElementById('meetingTime').value = formData.meetingTime || '';
+                document.getElementById('meetingLocation').value = formData.meetingLocation || '';
+                document.getElementById('courseUrl').value = formData.courseUrl || '';
+                document.getElementById('courseFormat').value = formData.courseFormat || '';
+                document.getElementById('expectedWorkload').value = formData.expectedWorkload || '';
+                document.getElementById('instructorName').value = formData.instructorName || '';
+                document.getElementById('officeLocation').value = formData.officeLocation || '';
+                document.getElementById('officePhone').value = formData.officePhone || '';
+                document.getElementById('contactEmail').value = formData.contactEmail || '';
+                document.getElementById('officeHours').value = formData.officeHours || '';
+                document.getElementById('appointmentUrl').value = formData.appointmentUrl || '';
+                document.getElementById('preferredContact').value = formData.preferredContact || '';
+                document.getElementById('courseDescription').value = formData.courseDescription || '';
+                document.getElementById('prerequisites').value = formData.prerequisites || '';
+                document.getElementById('learningOutcomes').value = formData.learningOutcomes || '';
+                document.getElementById('textbooks').value = formData.textbooks || '';
+                document.getElementById('techRequirements').value = formData.techRequirements || '';
+                document.getElementById('assessmentBreakdown').value = formData.assessmentBreakdown || '';
+                document.getElementById('gradingScale').value = formData.gradingScale || '';
+                document.getElementById('assignmentDetails').value = formData.assignmentDetails || '';
+                document.getElementById('makeupPolicy').value = formData.makeupPolicy || '';
+                document.getElementById('incompletePolicy').value = formData.incompletePolicy || '';
+                document.getElementById('gradeAppeals').value = formData.gradeAppeals || '';
+                document.getElementById('attendancePolicy').value = formData.attendancePolicy || '';
+                document.getElementById('latePolicy').value = formData.latePolicy || '';
+                document.getElementById('participationPolicy').value = formData.participationPolicy || '';
+                document.getElementById('technologyPolicy').value = formData.technologyPolicy || '';
+                document.getElementById('aiPolicy').value = formData.aiPolicy || '';
+                document.getElementById('conductPolicy').value = formData.conductPolicy || '';
+                document.getElementById('collaborationPolicy').value = formData.collaborationPolicy || '';
+                document.getElementById('citationStyle').value = formData.citationStyle || '';
+                document.getElementById('recordingPolicy').value = formData.recordingPolicy || '';
+                document.getElementById('additionalCoursePolicies').value = formData.additionalCoursePolicies || '';
+                document.getElementById('diversityStatement').value = formData.diversityStatement || '';
+                document.getElementById('academicIntegrity').value = formData.academicIntegrity || '';
+                document.getElementById('disabilityPolicy').value = formData.disabilityPolicy || '';
+                document.getElementById('religiousObservances').value = formData.religiousObservances || '';
+                document.getElementById('preferredNames').value = formData.preferredNames || '';
+                document.getElementById('titleIXPolicy').value = formData.titleIXPolicy || '';
+                document.getElementById('mentalHealthResources').value = formData.mentalHealthResources || '';
+                document.getElementById('supportServices').value = formData.supportServices || '';
+                document.getElementById('emailPolicy').value = formData.emailPolicy || '';
+                document.getElementById('emergencyProcedures').value = formData.emergencyProcedures || '';
+                document.getElementById('courseEvaluation').value = formData.courseEvaluation || '';
+                document.getElementById('otherPolicies').value = formData.otherPolicies || '';
+                document.getElementById('scheduleNotes').value = formData.scheduleNotes || '';
+                
+                const container = document.getElementById('scheduleContainer');
+                container.innerHTML = '';
+                scheduleCount = 0;
+                
+                if (formData.schedule && formData.schedule.length > 0) {
+                    formData.schedule.forEach(scheduleData => {
+                        addScheduleItem();
+                        const lastItem = container.lastElementChild;
+                        lastItem.querySelector('.schedule-label').value = scheduleData.label || '';
+                        lastItem.querySelector('.schedule-title').value = scheduleData.title || '';
+                        lastItem.querySelector('.schedule-dates').value = scheduleData.dates || '';
+                        lastItem.querySelector('.schedule-topics').value = scheduleData.topics || '';
+                        lastItem.querySelector('.schedule-readings').value = scheduleData.readings || '';
+                        lastItem.querySelector('.schedule-assignments').value = scheduleData.assignments || '';
+                    });
+                } else {
+                    addScheduleItem();
+                }
+                
+                updatePreview();
+                showNotification('Draft loaded successfully!', '📂');
+            } catch (e) {
+                showNotification('Error loading draft', '❌');
+                console.error('Load error:', e);
+            }
+        }
+
+        // Clear form
+        function clearForm() {
+            if (!confirm('Are you sure you want to clear all fields? This cannot be undone.')) {
+                return;
+            }
+            
+            document.querySelectorAll('input[type="text"], input[type="email"], input[type="url"], input[type="tel"], textarea, select').forEach(field => {
+                field.value = '';
+            });
+            
+            const container = document.getElementById('scheduleContainer');
+            container.innerHTML = '';
+            scheduleCount = 0;
+            addScheduleItem();
+            
+            updatePreview();
+            showNotification('Form cleared', '🗑️');
+        }
+
+        // Show notification
+        function showNotification(message, icon = '✓') {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <span class="notification-icon">${icon}</span>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
